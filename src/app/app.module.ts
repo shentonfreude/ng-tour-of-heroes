@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // NgModel lives here
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+// Only for testing with fake API:
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api'; // npm installed
+import { InMemoryDataService } from './in-memory-data.service';
 
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -22,7 +27,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    // intercepts HTTP requests, returns simulated server responses;
+    // remove when real server ready to receive requests
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncryption: false }),
   ],
   providers: [
     HeroService,
